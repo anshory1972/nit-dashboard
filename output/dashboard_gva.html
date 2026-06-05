@@ -10,18 +10,18 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   body {
     font-family: 'Segoe UI', system-ui, sans-serif;
-    background: #f1f5f9;
-    color: #1e293b;
+    background: #f3f4f6;
+    color: #111827;
     min-height: 100vh;
   }
   header {
-    background: #1e3a5f;
+    background: #1f1f1f;
     color: #fff;
     padding: 24px 32px 20px;
-    border-bottom: 4px solid #e85c2c;
+    border-bottom: 4px solid #9a7a31;
   }
   header h1 { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.01em; }
-  header p  { margin-top: 4px; font-size: 0.85rem; color: #94a3b8; }
+  header p  { margin-top: 4px; font-size: 0.85rem; color: #a08a53; }
 
   .container { max-width: 1280px; margin: 0 auto; padding: 28px 24px 48px; }
 
@@ -34,16 +34,16 @@
   }
   .kpi {
     background: #fff;
-    border-radius: 10px;
+    border-radius: 6px;
     padding: 16px 18px;
     border-top: 4px solid var(--accent);
-    box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    box-shadow: 0 18px 42px rgba(17,24,39,.08);
   }
   .kpi-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
-               letter-spacing: .05em; color: #64748b; margin-bottom: 6px; }
-  .kpi-code  { font-size: 0.68rem; color: #94a3b8; margin-bottom: 6px; }
-  .kpi-value { font-size: 1.55rem; font-weight: 700; color: #1e293b; }
-  .kpi-share { font-size: 0.78rem; color: #64748b; margin-top: 2px; }
+               letter-spacing: .05em; color: #6b7280; margin-bottom: 6px; }
+  .kpi-code  { font-size: 0.68rem; color: #9ca3af; margin-bottom: 6px; }
+  .kpi-value { font-size: 1.55rem; font-weight: 700; color: #111827; }
+  .kpi-share { font-size: 0.78rem; color: #6b7280; margin-top: 2px; }
 
   /* Charts */
   .charts-grid {
@@ -54,45 +54,45 @@
   }
   .chart-card {
     background: #fff;
-    border-radius: 10px;
+    border-radius: 6px;
     padding: 22px 20px 18px;
-    box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    box-shadow: 0 18px 42px rgba(17,24,39,.08);
   }
   .chart-card.full { grid-column: 1 / -1; }
   .chart-title {
-    font-size: 0.85rem; font-weight: 700; color: #1e293b;
+    font-size: 0.85rem; font-weight: 700; color: #111827;
     margin-bottom: 2px;
   }
   .chart-sub {
-    font-size: 0.72rem; color: #94a3b8; margin-bottom: 16px;
+    font-size: 0.72rem; color: #9ca3af; margin-bottom: 16px;
   }
   .chart-wrap { position: relative; }
 
   /* Note */
   .note {
-    font-size: 0.72rem; color: #94a3b8;
+    font-size: 0.72rem; color: #9ca3af;
     margin-top: 18px;
-    border-top: 1px solid #e2e8f0;
+    border-top: 1px solid #e5e7eb;
     padding-top: 12px;
     line-height: 1.6;
   }
-  .note strong { color: #64748b; }
+  .note strong { color: #6b7280; }
 
   /* Insight block */
   .insight {
-    background: #f8fafc;
-    border-left: 3px solid #cbd5e1;
+    background: #fffdf7;
+    border-left: 3px solid #d8bf78;
     border-radius: 0 6px 6px 0;
     padding: 10px 14px;
     margin-bottom: 16px;
     font-size: 0.75rem;
     line-height: 1.65;
-    color: #475569;
+    color: #4b5563;
   }
   .insight p { margin: 0; }
   .insight p + p { margin-top: 5px; }
-  .insight strong { color: #1e293b; font-weight: 600; }
-  .insight p:first-child strong { font-size: 0.78rem; color: #1e3a5f; }
+  .insight strong { color: #111827; font-weight: 600; }
+  .insight p:first-child strong { font-size: 0.78rem; color: #9a7a31; }
 
   /* Legend override */
   .legend-row {
@@ -184,7 +184,7 @@ const PALETTE = {
   'Compensation of Employees':     { bg: '#2563eb', border: '#1d4ed8' },
   'Net Taxes on Products':         { bg: '#16a34a', border: '#15803d' },
   'Other Net Taxes on Production': { bg: '#0d9488', border: '#0f766e' },
-  'Gross Operating Surplus':       { bg: '#ea580c', border: '#c2410c' },
+  'Gross Operating Surplus':       { bg: '#9a7a31', border: '#8d7a49' },
   'Gross Mixed Income':            { bg: '#7c3aed', border: '#6d28d9' },
 };
 
@@ -230,7 +230,7 @@ COMPONENTS.forEach(name => {
 // ── Shared chart defaults ────────────────────────────────────────────────────
 Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
 Chart.defaults.font.size = 11;
-Chart.defaults.color = '#64748b';
+Chart.defaults.color = '#6b7280';
 
 // ── Linear regression helper ─────────────────────────────────────────────────
 function linReg(ys) {
@@ -295,7 +295,7 @@ function linReg(ys) {
         y: {
           stacked: true, min: 0, max: 100,
           ticks: { callback: v => v + '%' },
-          grid: { color: '#e2e8f0' }
+          grid: { color: '#e5e7eb' }
         }
       }
     }
@@ -337,7 +337,7 @@ function linReg(ys) {
         },
         y: {
           ticks: { callback: v => v.toLocaleString('en-US') },
-          grid: { color: '#e2e8f0' }
+          grid: { color: '#e5e7eb' }
         }
       }
     }
@@ -385,7 +385,7 @@ function linReg(ys) {
         },
         y: {
           ticks: { callback: v => v + '%' },
-          grid: { color: '#e2e8f0' }
+          grid: { color: '#e5e7eb' }
         }
       }
     }
