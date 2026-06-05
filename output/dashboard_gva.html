@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NIT — Gross Value Added, Total Economy</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@3.0.1/dist/chartjs-plugin-annotation.min.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: #f1f5f9;
+    color: #1e293b;
+    min-height: 100vh;
+  }
+  header {
+    background: #1e3a5f;
+    color: #fff;
+    padding: 24px 32px 20px;
+    border-bottom: 4px solid #e85c2c;
+  }
+  header h1 { font-size: 1.45rem; font-weight: 700; letter-spacing: -0.01em; }
+  header p  { margin-top: 4px; font-size: 0.85rem; color: #94a3b8; }
+
+  .container { max-width: 1280px; margin: 0 auto; padding: 28px 24px 48px; }
+
+  /* KPI strip */
+  .kpi-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .kpi {
+    background: #fff;
+    border-radius: 10px;
+    padding: 16px 18px;
+    border-top: 4px solid var(--accent);
+    box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  }
+  .kpi-label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+               letter-spacing: .05em; color: #64748b; margin-bottom: 6px; }
+  .kpi-code  { font-size: 0.68rem; color: #94a3b8; margin-bottom: 6px; }
+  .kpi-value { font-size: 1.55rem; font-weight: 700; color: #1e293b; }
+  .kpi-share { font-size: 0.78rem; color: #64748b; margin-top: 2px; }
+
+  /* Charts */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 28px;
+  }
+  .chart-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 22px 20px 18px;
+    box-shadow: 0 1px 4px rgba(0,0,0,.07);
+  }
+  .chart-card.full { grid-column: 1 / -1; }
+  .chart-title {
+    font-size: 0.85rem; font-weight: 700; color: #1e293b;
+    margin-bottom: 2px;
+  }
+  .chart-sub {
+    font-size: 0.72rem; color: #94a3b8; margin-bottom: 16px;
+  }
+  .chart-wrap { position: relative; }
+
+  /* Note */
+  .note {
+    font-size: 0.72rem; color: #94a3b8;
+    margin-top: 18px;
+    border-top: 1px solid #e2e8f0;
+    padding-top: 12px;
+    line-height: 1.6;
+  }
+  .note strong { color: #64748b; }
+
+  /* Insight block */
+  .insight {
+    background: #f8fafc;
+    border-left: 3px solid #cbd5e1;
+    border-radius: 0 6px 6px 0;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+    font-size: 0.75rem;
+    line-height: 1.65;
+    color: #475569;
+  }
+  .insight p { margin: 0; }
+  .insight p + p { margin-top: 5px; }
+  .insight strong { color: #1e293b; font-weight: 600; }
+  .insight p:first-child strong { font-size: 0.78rem; color: #1e3a5f; }
+
+  /* Legend override */
+  .legend-row {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    margin-bottom: 14px;
+    font-size: 0.75rem;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Integrated Institutional Accounts &mdash; Gross Value Added (GVA)</h1>
+  <p>Total Economy &middot; Quarterly 2016&ndash;2024 &middot; Statistics Indonesia (BPS) &middot; Trillion IDR</p>
+</header>
+
+<div class="container">
+
+  <!-- KPI strip (latest quarter = Q4 2024) -->
+  <div class="kpi-row" id="kpiRow"></div>
+
+  <!-- 100% stacked bar -->
+  <div class="chart-card full" style="margin-bottom:20px">
+    <div class="chart-title">GVA Composition &mdash; Component Share (%)</div>
+    <div class="chart-sub">100% stacked &middot; each bar = one quarter</div>
+    <div id="legendShare" class="legend-row"></div>
+    <div class="insight">
+      <p><strong>Capital's share has overtaken labor's, and the gap shows no sign of closing.</strong></p>
+      <p><strong>Long-run:</strong> D.1 (Compensation of Employees) fell from a 2016–2019 average of 40.3% to 36.0% by 2021–2024, while B.2g (Gross Operating Surplus) rose from 36.5% to 39.7% over the same periods. Tax components and Mixed Income held broadly flat.</p>
+      <p><strong>Before vs. after COVID-19:</strong> The 2020 shock compressed D.1 to a 37.3% average and it never rebounded — settling permanently lower at 36.0% post-COVID. B.2g recovered quickly and peaked at 43% in Q3 2022, driven by the commodity price boom, cementing the reversal of the labor–capital balance.</p>
+    </div>
+    <div class="chart-wrap" style="height:340px">
+      <canvas id="chartShare"></canvas>
+    </div>
+    <div class="note" style="margin-top:12px">
+      <strong>&#9432; Q1 2022 normalization:</strong>
+      Shares are computed as each component divided by the sum of all components (not by B.1g).
+      In Q1 2022, Net Taxes on Products (D.21&ndash;D.31) is recorded at 91.4 T IDR in the generation-of-income account
+      but 176.3 T IDR in the production account &mdash; a 84.9 T IDR discrepancy in BPS source data.
+      Using the component sum as the denominator ensures bars always total 100%.
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <!-- Absolute line chart -->
+    <div class="chart-card">
+      <div class="chart-title">GVA Components &mdash; Absolute Values</div>
+      <div class="chart-sub">Trillion IDR, quarterly</div>
+      <div class="insight">
+        <p><strong>GVA nearly doubled in nine years; the operating surplus drove the post-COVID surge.</strong></p>
+        <p><strong>Long-run:</strong> Total GVA grew from 2,929 T (Q1 2016) to 5,675 T (Q4 2024). All components expanded in absolute terms, but Gross Operating Surplus grew the fastest — from 1,106 T to 2,128 T — while Compensation of Employees grew more moderately, from 1,167 T to 2,054 T.</p>
+        <p><strong>Before vs. after COVID-19:</strong> Q2 2020 was the simultaneous trough across all components (GVA 3,691 T). Recovery was rapid; by 2021 every component had exceeded its pre-pandemic peak. Gross Operating Surplus then surged to 2,186 T by Q1 2022 — well above its pre-COVID ceiling — propelled by elevated global commodity prices.</p>
+      </div>
+      <div class="chart-wrap" style="height:300px">
+        <canvas id="chartAbs"></canvas>
+      </div>
+    </div>
+
+    <!-- Share trend lines -->
+    <div class="chart-card">
+      <div class="chart-title">Component Share Trends</div>
+      <div class="chart-sub">% of GVA, quarterly &middot; excl. taxes</div>
+      <div class="insight">
+        <p><strong>COVID permanently swapped the positions of labor and capital in Indonesia's income distribution.</strong></p>
+        <p><strong>Long-run:</strong> D.1 and B.2g moved in opposite directions throughout the period. D.1 fell 4.3 pp (from 40.3% to 36.0%) while B.2g rose 3.2 pp (from 36.5% to 39.7%). B.3g (Gross Mixed Income, largely informal enterprise) remained stable in the 18–21% band with no directional trend.</p>
+        <p><strong>Before vs. after COVID-19:</strong> Pre-2020, D.1 led B.2g by 3.8 pp on average (40.3% vs. 36.5%). Post-2021, the relationship inverted: B.2g averaged 39.7% against D.1 at 36.0% — a 3.7 pp reversal. The 2022 commodity boom pushed B.2g to 43%, its highest recorded share, while D.1 has not recovered above 37% since Q1 2020.</p>
+      </div>
+      <div class="chart-wrap" style="height:300px">
+        <canvas id="chartB1g"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    <strong>Notes:</strong>
+    GVA is computed from the use side of the generation-of-income account:
+    D.1 + D.21&ndash;D.31 + D.29&ndash;D.39 + B.2g + B.3g = B.1g.
+    Q1 2022 Net Taxes on Products (D.21&ndash;D.31) is anomalously low by 84.93 T IDR &mdash; a known BPS data discrepancy between the production and generation-of-income accounts.
+    Source: BPS Indonesia, NIT 2016&ndash;2024.
+  </div>
+</div>
+
+<script>
+const DATA = {"labels": ["Q1 16", "Q2 16", "Q3 16", "Q4 16", "Q1 17", "Q2 17", "Q3 17", "Q4 17", "Q1 18", "Q2 18", "Q3 18", "Q4 18", "Q1 19", "Q2 19", "Q3 19", "Q4 19", "Q1 20", "Q2 20", "Q3 20", "Q4 20", "Q1 21", "Q2 21", "Q3 21", "Q4 21", "Q1 22", "Q2 22", "Q3 22", "Q4 22", "Q1 23", "Q2 23", "Q3 23", "Q4 23", "Q1 24", "Q2 24", "Q3 24", "Q4 24"], "b1g": [2929.27, 3073.54, 3205.02, 3193.9, 3228.17, 3366.79, 3504.14, 3490.73, 3510.36, 3686.84, 3842.34, 3799.21, 3782.62, 3964.07, 4067.36, 4018.61, 3923.35, 3690.74, 3897.85, 3931.41, 3972.93, 4178.02, 4327.38, 4498.41, 4508.66, 4898.03, 5066.97, 5114.8, 5071.5, 5223.29, 5294.9, 5302.66, 5288.58, 5536.59, 5638.87, 5674.93], "series": {"Compensation of Employees": [1166.7, 1258.23, 1216.05, 1391.26, 1257.24, 1284.88, 1395.11, 1698.75, 1427.85, 1420.96, 1478.66, 1604.76, 1528.18, 1585.89, 1543.7, 1553.64, 1423.63, 1420.09, 1366.38, 1551.94, 1533.6, 1669.57, 1547.85, 1583.6, 1567.08, 1744.3, 1799.45, 1829.99, 1704.94, 1864.45, 1823.74, 1891.18, 1929.7, 2033.41, 1979.48, 2054.04], "Net Taxes on Products": [83.52, 97.46, 131.82, 130.07, 95.55, 125.86, 146.52, 155.3, 108.27, 149.38, 166.01, 178.33, 122.79, 164.01, 179.14, 185.56, 128.22, 130.19, 136.7, 168.54, 139.58, 148.56, 172.82, 226.97, 91.36, 229.16, 226.65, 225.91, 234.01, 225.94, 224.03, 230.17, 224.72, 229.33, 233.82, 264.31], "Other Net Taxes on Production": [12.51, 14.03, 27.53, 35.82, 17.38, 22.79, 13.91, 46.89, 17.05, 22.86, 29.23, 38.83, 14.06, 28.68, 36.9, 29.2, 15.53, 24.05, 28.75, 29.79, 15.28, 29.96, 35.91, 27.84, 18.27, 24.27, 45.43, 31.31, 23.28, 31.07, 46.09, 34.81, 20.16, 24.38, 45.82, 38.3], "Gross Operating Surplus": [1105.98, 1153.7, 1255.16, 1129.93, 1273.97, 1311.97, 1264.68, 934.1, 1378.54, 1414.48, 1460.37, 1295.27, 1367.56, 1361.53, 1472.75, 1454.45, 1576.02, 1339.64, 1591.18, 1396.25, 1466.88, 1518.4, 1713.57, 1770.0, 1851.47, 1865.37, 2186.01, 2180.44, 2180.3, 2023.03, 2186.04, 2131.13, 1976.29, 2132.05, 2266.28, 2127.55], "Gross Mixed Income": [560.56, 550.12, 574.46, 506.83, 584.03, 621.29, 683.92, 655.7, 578.65, 679.14, 708.06, 682.02, 750.02, 823.97, 834.87, 795.75, 779.95, 776.78, 774.84, 784.9, 817.59, 811.53, 857.24, 890.0, 895.55, 1034.93, 809.43, 847.15, 928.97, 1078.8, 1015.02, 1015.37, 1137.71, 1117.42, 1113.48, 1190.72]}, "shares": {"Compensation of Employees": [39.83, 40.94, 37.94, 43.56, 38.95, 38.16, 39.81, 48.66, 40.68, 38.54, 38.48, 42.24, 40.4, 40.01, 37.95, 38.66, 36.29, 38.48, 35.05, 39.48, 38.6, 39.96, 35.77, 35.2, 34.76, 35.61, 35.51, 35.78, 33.62, 35.69, 34.44, 35.66, 36.49, 36.73, 35.1, 36.19], "Net Taxes on Products": [2.85, 3.17, 4.11, 4.07, 2.96, 3.74, 4.18, 4.45, 3.08, 4.05, 4.32, 4.69, 3.25, 4.14, 4.4, 4.62, 3.27, 3.53, 3.51, 4.29, 3.51, 3.56, 3.99, 5.05, 2.03, 4.68, 4.47, 4.42, 4.61, 4.33, 4.23, 4.34, 4.25, 4.14, 4.15, 4.66], "Other Net Taxes on Production": [0.43, 0.46, 0.86, 1.12, 0.54, 0.68, 0.4, 1.34, 0.49, 0.62, 0.76, 1.02, 0.37, 0.72, 0.91, 0.73, 0.4, 0.65, 0.74, 0.76, 0.38, 0.72, 0.83, 0.62, 0.41, 0.5, 0.9, 0.61, 0.46, 0.59, 0.87, 0.66, 0.38, 0.44, 0.81, 0.67], "Gross Operating Surplus": [37.76, 37.54, 39.16, 35.38, 39.46, 38.97, 36.09, 26.76, 39.27, 38.37, 38.01, 34.09, 36.15, 34.35, 36.21, 36.19, 40.17, 36.3, 40.82, 35.52, 36.92, 36.34, 39.6, 39.35, 41.06, 38.08, 43.14, 42.63, 42.99, 38.73, 41.29, 40.19, 37.37, 38.51, 40.19, 37.49], "Gross Mixed Income": [19.14, 17.9, 17.92, 15.87, 18.09, 18.45, 19.52, 18.78, 16.48, 18.42, 18.43, 17.95, 19.83, 20.79, 20.53, 19.8, 19.88, 21.05, 19.88, 19.96, 20.58, 19.42, 19.81, 19.78, 19.86, 21.13, 15.97, 16.56, 18.32, 20.65, 19.17, 19.15, 21.51, 20.18, 19.75, 20.98]}};
+
+const PALETTE = {
+  'Compensation of Employees':     { bg: '#2563eb', border: '#1d4ed8' },
+  'Net Taxes on Products':         { bg: '#16a34a', border: '#15803d' },
+  'Other Net Taxes on Production': { bg: '#0d9488', border: '#0f766e' },
+  'Gross Operating Surplus':       { bg: '#ea580c', border: '#c2410c' },
+  'Gross Mixed Income':            { bg: '#7c3aed', border: '#6d28d9' },
+};
+
+const CODES = {
+  'Compensation of Employees':     'D.1',
+  'Net Taxes on Products':         'D.21–D.31',
+  'Other Net Taxes on Production': 'D.29–D.39',
+  'Gross Operating Surplus':       'B.2g',
+  'Gross Mixed Income':            'B.3g',
+};
+
+const COMPONENTS = Object.keys(PALETTE);
+const N = DATA.labels.length;
+
+// Recompute shares from component sums so bars always total 100%
+// (pre-baked shares use B.1g as denominator, which diverges in Q1/Annual 2022 due to a known data error)
+const COMP_TOTALS = DATA.labels.map((_, i) =>
+  COMPONENTS.reduce((s, name) => s + DATA.series[name][i], 0)
+);
+COMPONENTS.forEach(name => {
+  DATA.shares[name] = DATA.series[name].map((v, i) =>
+    +(v / COMP_TOTALS[i] * 100).toFixed(2)
+  );
+});
+
+// ── KPI strip (last quarter) ─────────────────────────────────────────────────
+const kpiRow = document.getElementById('kpiRow');
+COMPONENTS.forEach(name => {
+  const val = DATA.series[name][N - 1];
+  const share = DATA.shares[name][N - 1];
+  const kpi = document.createElement('div');
+  kpi.className = 'kpi';
+  kpi.style.setProperty('--accent', PALETTE[name].bg);
+  kpi.innerHTML = `
+    <div class="kpi-label">${name}</div>
+    <div class="kpi-code">${CODES[name]}</div>
+    <div class="kpi-value">${val.toLocaleString('en-US', {maximumFractionDigits: 1})}</div>
+    <div class="kpi-share">${share.toFixed(1)}% of GVA &middot; Q4 2024</div>
+  `;
+  kpiRow.appendChild(kpi);
+});
+
+// ── Shared chart defaults ────────────────────────────────────────────────────
+Chart.defaults.font.family = "'Segoe UI', system-ui, sans-serif";
+Chart.defaults.font.size = 11;
+Chart.defaults.color = '#64748b';
+
+// ── Linear regression helper ─────────────────────────────────────────────────
+function linReg(ys) {
+  const n = ys.length;
+  const mx = (n - 1) / 2;
+  const my = ys.reduce((a, b) => a + b, 0) / n;
+  const num = ys.reduce((s, y, i) => s + (i - mx) * (y - my), 0);
+  const den = ys.reduce((s, _, i) => s + (i - mx) ** 2, 0);
+  const slope = num / den;
+  const intc  = my - slope * mx;
+  return ys.map((_, i) => +(intc + slope * i).toFixed(2));
+}
+
+// ── Chart 1: 100% stacked bar ────────────────────────────────────────────────
+{
+  const legDiv = document.getElementById('legendShare');
+  COMPONENTS.forEach(name => {
+    const el = document.createElement('div');
+    el.className = 'legend-item';
+    el.innerHTML = `<div class="legend-dot" style="background:${PALETTE[name].bg}"></div><span>${name} (${CODES[name]})</span>`;
+    legDiv.appendChild(el);
+  });
+
+  const datasets = COMPONENTS.map(name => ({
+    label: name,
+    data: DATA.shares[name],
+    backgroundColor: PALETTE[name].bg,
+    borderColor: PALETTE[name].border,
+    borderWidth: 0.5,
+    stack: 'stack',
+  }));
+
+  new Chart(document.getElementById('chartShare'), {
+    type: 'bar',
+    data: { labels: DATA.labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: ctx => DATA.labels[ctx[0].dataIndex],
+            label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`,
+            footer: ctx => {
+              const i = ctx[0].dataIndex;
+              return `GVA: ${DATA.b1g[i].toLocaleString('en-US', {maximumFractionDigits: 0})} T IDR`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          stacked: true,
+          grid: { display: false },
+          ticks: {
+            maxRotation: 0,
+            callback(val, i) {
+              return DATA.labels[i].startsWith('Q1') ? `'${DATA.labels[i].slice(3)}` : '';
+            }
+          }
+        },
+        y: {
+          stacked: true, min: 0, max: 100,
+          ticks: { callback: v => v + '%' },
+          grid: { color: '#e2e8f0' }
+        }
+      }
+    }
+  });
+}
+
+// ── Chart 2: Absolute line ────────────────────────────────────────────────────
+{
+  const datasets = COMPONENTS.map(name => ({
+    label: name,
+    data: DATA.series[name],
+    borderColor: PALETTE[name].bg,
+    backgroundColor: PALETTE[name].bg + '18',
+    borderWidth: 1.8,
+    pointRadius: 0,
+    tension: 0,
+    fill: false,
+  }));
+
+  new Chart(document.getElementById('chartAbs'), {
+    type: 'line',
+    data: { labels: DATA.labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10, font: { size: 10 } } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('en-US', {maximumFractionDigits: 0})} T`
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { maxRotation: 0, callback(val, i) {
+            return DATA.labels[i].startsWith('Q1') ? `'${DATA.labels[i].slice(3)}` : '';
+          }}
+        },
+        y: {
+          ticks: { callback: v => v.toLocaleString('en-US') },
+          grid: { color: '#e2e8f0' }
+        }
+      }
+    }
+  });
+}
+
+// ── Chart 3: Share trend lines (non-tax components) ──────────────────────────
+{
+  const TREND_COMPONENTS = [
+    'Compensation of Employees',
+    'Gross Operating Surplus',
+    'Gross Mixed Income',
+  ];
+
+  const datasets = TREND_COMPONENTS.map(name => ({
+    label: `${name} (${CODES[name]})`,
+    data: DATA.shares[name],
+    borderColor: PALETTE[name].bg,
+    backgroundColor: 'transparent',
+    borderWidth: 2,
+    pointRadius: 0,
+    tension: 0,
+    fill: false,
+  }));
+
+  new Chart(document.getElementById('chartB1g'), {
+    type: 'line',
+    data: { labels: DATA.labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10, font: { size: 10 } } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { display: false },
+          ticks: { maxRotation: 0, callback(val, i) {
+            return DATA.labels[i].startsWith('Q1') ? `'${DATA.labels[i].slice(3)}` : '';
+          }}
+        },
+        y: {
+          ticks: { callback: v => v + '%' },
+          grid: { color: '#e2e8f0' }
+        }
+      }
+    }
+  });
+}
+</script>
+</body>
+</html>
