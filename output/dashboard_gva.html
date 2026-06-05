@@ -94,6 +94,28 @@
   .insight strong { color: #111827; font-weight: 600; }
   .insight p:first-child strong { font-size: 0.78rem; color: #9a7a31; }
 
+  /* Share bar */
+  .share-bar {
+    display: flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
+    flex-wrap: wrap;
+  }
+  .share-bar span { font-size: 0.68rem; color: #9ca3af; margin-right: 2px; }
+  .share-btn {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 0.68rem; font-weight: 600;
+    padding: 4px 10px; border-radius: 4px; border: none;
+    cursor: pointer; text-decoration: none;
+    transition: opacity 0.15s;
+  }
+  .share-btn:hover { opacity: 0.82; }
+  .share-btn.x        { background:#000;    color:#fff; }
+  .share-btn.linkedin { background:#0a66c2; color:#fff; }
+  .share-btn.whatsapp { background:#25d366; color:#fff; }
+  .share-btn.copy     { background:#f3f4f6; color:#374151; border: 1px solid #e5e7eb; }
+  .share-btn.download { background:#9a7a31; color:#fff; }
+
   /* Legend override */
   .legend-row {
     display: flex; flex-wrap: wrap; gap: 12px;
@@ -137,7 +159,7 @@
   <div class="kpi-row" id="kpiRow"></div>
 
   <!-- 100% stacked bar -->
-  <div class="chart-card full" style="margin-bottom:20px">
+  <div class="chart-card full" id="section-composition" style="margin-bottom:20px">
     <div class="chart-title">GVA Composition &mdash; Component Share (%)</div>
     <div class="chart-sub">100% stacked &middot; each bar = one quarter</div>
     <div id="legendShare" class="legend-row"></div>
@@ -148,6 +170,14 @@
     </div>
     <div class="chart-wrap" style="height:340px">
       <canvas id="chartShare"></canvas>
+    </div>
+    <div class="share-bar">
+      <span>Share:</span>
+      <a class="share-btn x"        href="#" onclick="shareChart('x','composition');return false;">&#10005; Post</a>
+      <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','composition');return false;">in LinkedIn</a>
+      <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','composition');return false;">&#128235; WhatsApp</a>
+      <button class="share-btn copy"     onclick="copyLink('composition')">&#128279; Copy link</button>
+      <button class="share-btn download" onclick="downloadChart('chartShare','GVA-Composition')">&#8595; Download PNG</button>
     </div>
     <div class="note" style="margin-top:12px">
       <strong>&#9432; Q1 2022 normalization:</strong>
@@ -160,7 +190,7 @@
 
   <div class="charts-grid">
     <!-- Absolute line chart -->
-    <div class="chart-card">
+    <div class="chart-card" id="section-absolute">
       <div class="chart-title">GVA Components &mdash; Absolute Values</div>
       <div class="chart-sub">Trillion IDR, quarterly</div>
       <div class="insight">
@@ -171,10 +201,18 @@
       <div class="chart-wrap" style="height:300px">
         <canvas id="chartAbs"></canvas>
       </div>
+      <div class="share-bar">
+        <span>Share:</span>
+        <a class="share-btn x"        href="#" onclick="shareChart('x','absolute');return false;">&#10005; Post</a>
+        <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','absolute');return false;">in LinkedIn</a>
+        <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','absolute');return false;">&#128235; WhatsApp</a>
+        <button class="share-btn copy"     onclick="copyLink('absolute')">&#128279; Copy link</button>
+        <button class="share-btn download" onclick="downloadChart('chartAbs','GVA-Absolute-Values')">&#8595; Download PNG</button>
+      </div>
     </div>
 
     <!-- Share trend lines -->
-    <div class="chart-card">
+    <div class="chart-card" id="section-trends">
       <div class="chart-title">Component Share Trends</div>
       <div class="chart-sub">% of GVA, quarterly &middot; excl. taxes</div>
       <div class="insight">
@@ -184,6 +222,14 @@
       </div>
       <div class="chart-wrap" style="height:300px">
         <canvas id="chartB1g"></canvas>
+      </div>
+      <div class="share-bar">
+        <span>Share:</span>
+        <a class="share-btn x"        href="#" onclick="shareChart('x','trends');return false;">&#10005; Post</a>
+        <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','trends');return false;">in LinkedIn</a>
+        <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','trends');return false;">&#128235; WhatsApp</a>
+        <button class="share-btn copy"     onclick="copyLink('trends')">&#128279; Copy link</button>
+        <button class="share-btn download" onclick="downloadChart('chartB1g','GVA-Share-Trends')">&#8595; Download PNG</button>
       </div>
     </div>
   </div>
@@ -419,6 +465,43 @@ function linReg(ys) {
       }
     }
   });
+}
+
+// ── Share & download helpers ──────────────────────────────────────────────────
+const PAGE_URL = 'https://anshory1972.github.io/nit-dashboard/output/dashboard_gva.html';
+const SHARE_TEXT = {
+  composition: 'GVA Composition — Component Share (%), Indonesia Total Economy 2016–2024 | NIT Dashboard',
+  absolute:    'GVA Components — Absolute Values, Indonesia Total Economy 2016–2024 | NIT Dashboard',
+  trends:      'GVA Component Share Trends, Indonesia Total Economy 2016–2024 | NIT Dashboard',
+};
+
+function shareChart(platform, section) {
+  const url  = encodeURIComponent(`${PAGE_URL}#section-${section}`);
+  const text = encodeURIComponent(SHARE_TEXT[section]);
+  const targets = {
+    x:        `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+    linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+    whatsapp: `https://wa.me/?text=${text}%20${url}`,
+  };
+  window.open(targets[platform], '_blank', 'width=600,height=480');
+}
+
+function copyLink(section) {
+  const url = `${PAGE_URL}#section-${section}`;
+  navigator.clipboard.writeText(url).then(() => {
+    const btn = event.target;
+    const orig = btn.textContent;
+    btn.textContent = '✓ Copied!';
+    setTimeout(() => btn.textContent = orig, 2000);
+  });
+}
+
+function downloadChart(canvasId, filename) {
+  const chart = Chart.getChart(canvasId);
+  const link  = document.createElement('a');
+  link.download = `${filename}.png`;
+  link.href = chart.toBase64Image('image/png', 1);
+  link.click();
 }
 </script>
 </body>
