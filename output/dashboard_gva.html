@@ -133,7 +133,7 @@
     <img src="images/nit_dashboard_logo_dark.svg" alt="NIT Dashboard Logo" style="height:52px; width:auto;">
   </div>
   <h1>NIT Dashboard &mdash; Integrated Institutional Accounts, Indonesia</h1>
-  <p>Total Economy &middot; Quarterly 2016&ndash;2024 &middot; Statistics Indonesia (BPS) &middot; Trillion IDR</p>
+  <p>Quarterly 2016&ndash;2024 &middot; Statistics Indonesia (BPS) &middot; Trillion IDR</p>
 </header>
 
 <div style="background:#fffbea; border-bottom: 1px solid #d8bf78;">
@@ -160,13 +160,13 @@
 
   <!-- 100% stacked bar -->
   <div class="chart-card full" id="section-composition" style="margin-bottom:20px">
-    <div class="chart-title">GVA Composition &mdash; Component Share (%)</div>
+    <div class="chart-title">GVA Composition &mdash; Component Share (%), Total Economy</div>
     <div class="chart-sub">100% stacked &middot; each bar = one quarter</div>
     <div id="legendShare" class="legend-row"></div>
     <div class="insight">
       <p><strong>Capital's share has overtaken labor's, and the gap shows no sign of closing.</strong></p>
-      <p><strong>Long-run:</strong> D.1 (Compensation of Employees) fell from a 2016–2019 average of 40.3% to 36.0% by 2021–2024, while B.2g (Gross Operating Surplus) rose from 36.5% to 39.7% over the same periods. Tax components and Mixed Income held broadly flat.</p>
-      <p><strong>Before vs. after COVID-19:</strong> The 2020 shock compressed D.1 to a 37.3% average and it never rebounded — settling permanently lower at 36.0% post-COVID. B.2g recovered quickly and peaked at 43% in Q3 2022, driven by the commodity price boom, cementing the reversal of the labor–capital balance.</p>
+      <p><strong>Long-run:</strong> Compensation of Employees (D.1) fell from a 2016–2019 average of 40.3% to 36.0% by 2021–2024, while Gross Operating Surplus (B.2g) rose from 36.5% to 39.7% over the same periods. Tax components and Gross Mixed Income held broadly flat.</p>
+      <p><strong>Before vs. after COVID-19:</strong> The 2020 shock compressed Compensation of Employees (D.1) to a 37.3% average and it never rebounded — settling permanently lower at 36.0% post-COVID. Gross Operating Surplus (B.2g) recovered quickly and peaked at 43% in Q3 2022, driven by the commodity price boom, cementing the reversal of the labor–capital balance.</p>
     </div>
     <div class="chart-wrap" style="height:340px">
       <canvas id="chartShare"></canvas>
@@ -191,7 +191,7 @@
   <div class="charts-grid">
     <!-- Absolute line chart -->
     <div class="chart-card" id="section-absolute">
-      <div class="chart-title">GVA Components &mdash; Absolute Values</div>
+      <div class="chart-title">GVA Components &mdash; Absolute Values, Total Economy</div>
       <div class="chart-sub">Trillion IDR, quarterly</div>
       <div class="insight">
         <p><strong>GVA nearly doubled in nine years; the operating surplus drove the post-COVID surge.</strong></p>
@@ -213,12 +213,12 @@
 
     <!-- Share trend lines -->
     <div class="chart-card" id="section-trends">
-      <div class="chart-title">Component Share Trends</div>
+      <div class="chart-title">Component Share Trends, Total Economy</div>
       <div class="chart-sub">% of GVA, quarterly &middot; excl. taxes</div>
       <div class="insight">
         <p><strong>COVID permanently swapped the positions of labor and capital in Indonesia's income distribution.</strong></p>
-        <p><strong>Long-run:</strong> D.1 and B.2g moved in opposite directions throughout the period. D.1 fell 4.3 pp (from 40.3% to 36.0%) while B.2g rose 3.2 pp (from 36.5% to 39.7%). B.3g (Gross Mixed Income, largely informal enterprise) remained stable in the 18–21% band with no directional trend.</p>
-        <p><strong>Before vs. after COVID-19:</strong> Pre-2020, D.1 led B.2g by 3.8 pp on average (40.3% vs. 36.5%). Post-2021, the relationship inverted: B.2g averaged 39.7% against D.1 at 36.0% — a 3.7 pp reversal. The 2022 commodity boom pushed B.2g to 43%, its highest recorded share, while D.1 has not recovered above 37% since Q1 2020.</p>
+        <p><strong>Long-run:</strong> Compensation of Employees (D.1) fell 4.3 pp (40.3%→36.0%) while Gross Operating Surplus (B.2g) rose 3.2 pp (36.5%→39.7%). Gross Mixed Income (B.3g) held stable in the 18–21% band with no directional trend.</p>
+        <p><strong>Before vs. after COVID-19:</strong> Pre-2020, Compensation of Employees (D.1) led Gross Operating Surplus (B.2g) by 3.8 pp; post-2021 the positions inverted — a 3.7 pp reversal. The 2022 commodity boom pushed Gross Operating Surplus (B.2g) to 43%, its highest recorded share.</p>
       </div>
       <div class="chart-wrap" style="height:300px">
         <canvas id="chartB1g"></canvas>
@@ -230,6 +230,90 @@
         <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','trends');return false;" title="Share on WhatsApp">&#128235;</a>
         <a class="share-btn facebook" href="#" onclick="shareChart('facebook','trends');return false;" title="Share on Facebook">f</a>
         <button class="share-btn download" onclick="downloadChart('chartB1g','GVA-Share-Trends')" title="Download PNG">&#8595;</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <!-- SECTION 2: HOUSEHOLD PRIMARY INCOME                           -->
+  <!-- ═══════════════════════════════════════════════════════════════ -->
+  <div style="margin: 36px 0 20px; padding: 18px 22px; background:#1f1f1f; border-radius:6px; border-left:4px solid #9a7a31;">
+    <div style="font-size:1rem; font-weight:700; color:#fff; margin-bottom:6px;">Household Primary Income (B.5g — Rumah Tangga)</div>
+    <p style="font-size:0.78rem; color:#a08a53; line-height:1.7; margin:0;">
+      Household Primary Income (B.5g) is the total income accruing to the household sector before any redistribution through taxes or social transfers.
+      It equals the sum of four components: <strong style="color:#d8bf78;">Compensation of Employees (D.1)</strong> — wages and salaries received by household members as workers;
+      <strong style="color:#d8bf78;">Gross Mixed Income (B.3g)</strong> — income from self-employment and unincorporated household enterprises, where labor and capital returns cannot be separated;
+      <strong style="color:#d8bf78;">Gross Operating Surplus (B.2g)</strong> — returns on assets owned directly by households (e.g. rental property); and
+      <strong style="color:#d8bf78;">Net Property Income (D.4)</strong> — interest, dividends, and other investment income received, net of property income paid (e.g. mortgage interest).
+      B.5g is the household sector's claim on national income at the primary distribution stage — before the government redistributes income through taxes and transfers.
+    </p>
+  </div>
+
+  <!-- 100% stacked bar -->
+  <div class="chart-card full" id="section-hh-composition" style="margin-bottom:20px">
+    <div class="chart-title">Household Primary Income &mdash; Component Share (%), Household Sector</div>
+    <div class="chart-sub">100% stacked &middot; each bar = one quarter</div>
+    <div id="legendHHShare" class="legend-row"></div>
+    <div class="insight">
+      <p><strong>Wages still dominate, but mixed income has been gaining ground — a shift toward informal income that COVID entrenched.</strong></p>
+      <p><strong>Long-run:</strong> Compensation of Employees (D.1) accounted for 63.9% of household primary income on average pre-COVID, declining to 60.9% post-2021. Gross Mixed Income (B.3g) rose correspondingly from 29.7% to 33.2%. Gross Operating Surplus and Net Property Income each remain small at around 3%, though the latter shows marked quarterly volatility driven by dividend seasonality.</p>
+      <p><strong>Before vs. after COVID-19:</strong> The 2020 shock compressed the wage share to 60.2% as formal employment contracted. Unlike GVA-level wages (which never recovered), household Compensation of Employees (D.1) share partially stabilised at 61%, suggesting some wage recovery — but the structural gain in Gross Mixed Income (B.3g) (33.2% post-COVID vs. 29.7% pre-COVID) reflects a lasting expansion of informal and self-employment activities.</p>
+    </div>
+    <div class="chart-wrap" style="height:340px">
+      <canvas id="chartHHShare"></canvas>
+    </div>
+    <div class="share-bar">
+      <span>Share:</span>
+      <a class="share-btn x"        href="#" onclick="shareChart('x','hh-composition');return false;" title="Post on X">𝕏</a>
+      <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','hh-composition');return false;" title="Share on LinkedIn">in</a>
+      <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','hh-composition');return false;" title="Share on WhatsApp">&#128235;</a>
+      <a class="share-btn facebook" href="#" onclick="shareChart('facebook','hh-composition');return false;" title="Share on Facebook">f</a>
+      <button class="share-btn download" onclick="downloadChart('chartHHShare','HH-Income-Composition')" title="Download PNG">&#8595;</button>
+    </div>
+  </div>
+
+  <div class="charts-grid">
+    <!-- Absolute values -->
+    <div class="chart-card" id="section-hh-absolute">
+      <div class="chart-title">Household Primary Income &mdash; Absolute Values, Household Sector</div>
+      <div class="chart-sub">Trillion IDR, quarterly</div>
+      <div class="insight">
+        <p><strong>Household income nearly doubled in nine years, with mixed income outpacing wages in growth rate.</strong></p>
+        <p><strong>Long-run:</strong> Household Primary Income (B.5g) grew from 1,831 T (Q1 2016) to 3,390 T (Q4 2024). Compensation of Employees (D.1) rose from 1,162 T to 2,048 T (+76%), while Gross Mixed Income (B.3g) expanded faster — from 561 T to 1,191 T (+112%) — reflecting rapid growth in the self-employed and informal sector.</p>
+        <p><strong>Before vs. after COVID-19:</strong> The wage trough was Q3 2020 (1,361 T), well below the pre-COVID average of 1,455 T. Recovery was swift — wages exceeded pre-COVID levels by Q1 2021. Mixed income proved more resilient, barely dipping in 2020, then surging in 2022 alongside the commodity boom that benefited smallholder farmers and traders.</p>
+      </div>
+      <div class="chart-wrap" style="height:300px">
+        <canvas id="chartHHAbs"></canvas>
+      </div>
+      <div class="share-bar">
+        <span>Share:</span>
+        <a class="share-btn x"        href="#" onclick="shareChart('x','hh-absolute');return false;" title="Post on X">𝕏</a>
+        <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','hh-absolute');return false;" title="Share on LinkedIn">in</a>
+        <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','hh-absolute');return false;" title="Share on WhatsApp">&#128235;</a>
+        <a class="share-btn facebook" href="#" onclick="shareChart('facebook','hh-absolute');return false;" title="Share on Facebook">f</a>
+        <button class="share-btn download" onclick="downloadChart('chartHHAbs','HH-Income-Absolute')" title="Download PNG">&#8595;</button>
+      </div>
+    </div>
+
+    <!-- Share trend lines -->
+    <div class="chart-card" id="section-hh-trends">
+      <div class="chart-title">Household Primary Income &mdash; Share Trends, Household Sector</div>
+      <div class="chart-sub">% of B.5g, quarterly &middot; unstacked</div>
+      <div class="insight">
+        <p><strong>A persistent secular rise in Gross Mixed Income (B.3g) share points to deepening informality — a trend COVID accelerated and permanently entrenched.</strong></p>
+        <p><strong>Long-run:</strong> Compensation of Employees (D.1) share fell from 63.9% to 60.9% (2016–2019 vs. 2021–2024 averages) while Gross Mixed Income (B.3g) rose from 29.7% to 33.2%, narrowing the gap by 6.5 pp. Gross Operating Surplus (B.2g) held flat at 3.3%; Net Property Income (D.4) is the most volatile, with quarterly spikes driven by dividend seasonality.</p>
+        <p><strong>Before vs. after COVID-19:</strong> The gap between Compensation of Employees (D.1) and Gross Mixed Income (B.3g) shrank from 34.2 pp pre-2020 to 27.7 pp post-2021. Gross Mixed Income (B.3g) has remained above 33% in every quarter since Q3 2020 — consistent with a permanent reallocation of workers toward informal income that prior shocks did not produce.</p>
+      </div>
+      <div class="chart-wrap" style="height:300px">
+        <canvas id="chartHHTrends"></canvas>
+      </div>
+      <div class="share-bar">
+        <span>Share:</span>
+        <a class="share-btn x"        href="#" onclick="shareChart('x','hh-trends');return false;" title="Post on X">𝕏</a>
+        <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','hh-trends');return false;" title="Share on LinkedIn">in</a>
+        <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','hh-trends');return false;" title="Share on WhatsApp">&#128235;</a>
+        <a class="share-btn facebook" href="#" onclick="shareChart('facebook','hh-trends');return false;" title="Share on Facebook">f</a>
+        <button class="share-btn download" onclick="downloadChart('chartHHTrends','HH-Income-Share-Trends')" title="Download PNG">&#8595;</button>
       </div>
     </div>
   </div>
@@ -395,6 +479,7 @@ function linReg(ys) {
     data: { labels: DATA.labels, datasets },
     options: {
       responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10, font: { size: 10 } } },
         tooltip: {
@@ -443,6 +528,7 @@ function linReg(ys) {
     data: { labels: DATA.labels, datasets },
     options: {
       responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
       plugins: {
         legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10, font: { size: 10 } } },
         tooltip: {
@@ -467,12 +553,134 @@ function linReg(ys) {
   });
 }
 
+// ── Household Primary Income Data ─────────────────────────────────────────────
+const HH = {"labels": ["Q1 16", "Q2 16", "Q3 16", "Q4 16", "Q1 17", "Q2 17", "Q3 17", "Q4 17", "Q1 18", "Q2 18", "Q3 18", "Q4 18", "Q1 19", "Q2 19", "Q3 19", "Q4 19", "Q1 20", "Q2 20", "Q3 20", "Q4 20", "Q1 21", "Q2 21", "Q3 21", "Q4 21", "Q1 22", "Q2 22", "Q3 22", "Q4 22", "Q1 23", "Q2 23", "Q3 23", "Q4 23", "Q1 24", "Q2 24", "Q3 24", "Q4 24"], "b5g": [1830.57, 2048.35, 1905.84, 1980.33, 1923.24, 2084.96, 2190.65, 2462.0, 2111.88, 2308.03, 2323.5, 2437.29, 2382.71, 2605.68, 2473.98, 2513.98, 2354.87, 2379.86, 2334.81, 2463.08, 2473.61, 2691.67, 2513.45, 2578.17, 2609.56, 3050.46, 2755.41, 2858.01, 2796.26, 3291.07, 3015.21, 3088.97, 3215.09, 3315.02, 3205.26, 3390.15], "series": {"Compensation of Employees": [1161.92, 1253.38, 1210.76, 1385.64, 1252.37, 1280.41, 1389.75, 1693.2, 1422.94, 1415.87, 1473.06, 1598.93, 1523.28, 1580.72, 1538.29, 1548.18, 1418.89, 1416.24, 1361.26, 1546.55, 1528.91, 1665.67, 1542.64, 1577.99, 1562.11, 1740.14, 1793.71, 1823.56, 1699.35, 1859.96, 1817.58, 1884.41, 1923.63, 2029.56, 1972.74, 2047.52], "Gross Mixed Income": [560.56, 550.12, 574.46, 506.83, 584.03, 621.29, 683.92, 655.7, 578.65, 679.14, 708.06, 682.02, 750.02, 823.97, 834.87, 795.75, 779.95, 776.78, 774.84, 784.9, 817.59, 811.53, 857.24, 890.0, 895.55, 1034.93, 809.43, 847.15, 928.97, 1078.8, 1015.02, 1015.37, 1137.71, 1117.42, 1113.48, 1190.72], "Gross Operating Surplus": [63.69, 63.12, 65.45, 56.59, 74.56, 73.0, 71.63, 72.49, 70.05, 74.09, 76.37, 78.58, 74.94, 79.34, 78.63, 84.17, 84.04, 80.62, 81.15, 82.96, 85.63, 87.24, 87.83, 91.54, 90.47, 95.57, 95.45, 94.23, 89.46, 98.71, 89.9, 102.99, 100.65, 95.54, 103.61, 104.98], "Net Property Income (D.4)": [44.4, 181.72, 55.17, 31.28, 12.27, 110.25, 45.35, 40.62, 40.24, 138.92, 66.0, 77.77, 34.47, 121.64, 22.18, 85.88, 71.98, 106.22, 117.55, 48.67, 41.47, 127.22, 25.74, 18.63, 61.44, 179.82, 56.81, 93.07, 78.47, 253.6, 92.71, 86.2, 53.11, 72.5, 15.43, 46.93]}, "shares": {"Compensation of Employees": [63.47, 61.19, 63.53, 69.97, 65.12, 61.41, 63.44, 68.77, 67.38, 61.35, 63.4, 65.6, 63.93, 60.66, 62.18, 61.58, 60.25, 59.51, 58.3, 62.79, 61.81, 61.88, 61.38, 61.21, 59.86, 57.05, 65.1, 63.81, 60.77, 56.52, 60.28, 61.0, 59.83, 61.22, 61.55, 60.4], "Gross Mixed Income": [30.62, 26.86, 30.14, 25.59, 30.37, 29.8, 31.22, 26.63, 27.4, 29.43, 30.47, 27.98, 31.48, 31.62, 33.75, 31.65, 33.12, 32.64, 33.19, 31.87, 33.05, 30.15, 34.11, 34.52, 34.32, 33.93, 29.38, 29.64, 33.22, 32.78, 33.66, 32.87, 35.39, 33.71, 34.74, 35.12], "Gross Operating Surplus": [3.48, 3.08, 3.43, 2.86, 3.88, 3.5, 3.27, 2.94, 3.32, 3.21, 3.29, 3.22, 3.15, 3.04, 3.18, 3.35, 3.57, 3.39, 3.48, 3.37, 3.46, 3.24, 3.49, 3.55, 3.47, 3.13, 3.46, 3.3, 3.2, 3.0, 2.98, 3.33, 3.13, 2.88, 3.23, 3.1], "Net Property Income (D.4)": [2.43, 8.87, 2.89, 1.58, 0.64, 5.29, 2.07, 1.65, 1.91, 6.02, 2.84, 3.19, 1.45, 4.67, 0.9, 3.42, 3.06, 4.46, 5.03, 1.98, 1.68, 4.73, 1.02, 0.72, 2.35, 5.89, 2.06, 3.26, 2.81, 7.71, 3.07, 2.79, 1.65, 2.19, 0.48, 1.38]}};
+
+const HH_PALETTE = {
+  'Compensation of Employees': { bg: '#2563eb', border: '#1d4ed8' },
+  'Gross Mixed Income':        { bg: '#7c3aed', border: '#6d28d9' },
+  'Gross Operating Surplus':   { bg: '#9a7a31', border: '#8d7a49' },
+  'Net Property Income (D.4)': { bg: '#e11d48', border: '#be123c' },
+};
+const HH_COMPONENTS = Object.keys(HH_PALETTE);
+
+// Recompute shares from sums to ensure 100%
+const HH_TOTALS = HH.labels.map((_, i) => HH_COMPONENTS.reduce((s, n) => s + HH.series[n][i], 0));
+HH_COMPONENTS.forEach(name => {
+  HH.shares[name] = HH.series[name].map((v, i) => +(v / HH_TOTALS[i] * 100).toFixed(2));
+});
+
+// ── HH Legend helper ───────────────────────────────────────────────────────────
+{
+  const legDiv = document.getElementById('legendHHShare');
+  HH_COMPONENTS.forEach(name => {
+    const el = document.createElement('div');
+    el.className = 'legend-item';
+    el.innerHTML = `<div class="legend-dot" style="background:${HH_PALETTE[name].bg}"></div><span>${name}</span>`;
+    legDiv.appendChild(el);
+  });
+}
+
+// ── Chart 4: HH 100% stacked bar ──────────────────────────────────────────────
+{
+  const datasets = HH_COMPONENTS.map(name => ({
+    label: name,
+    data: HH.shares[name],
+    backgroundColor: HH_PALETTE[name].bg,
+    borderColor: HH_PALETTE[name].border,
+    borderWidth: 0.5,
+    stack: 'stack',
+  }));
+  new Chart(document.getElementById('chartHHShare'), {
+    type: 'bar',
+    data: { labels: HH.labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            title: ctx => HH.labels[ctx[0].dataIndex],
+            label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`,
+            footer: ctx => `B.5g: ${HH.b5g[ctx[0].dataIndex].toLocaleString('en-US', {maximumFractionDigits:0})} T IDR`,
+          }
+        }
+      },
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { maxRotation: 0,
+          callback(val, i) { return HH.labels[i].startsWith('Q1') ? `'${HH.labels[i].slice(3)}` : ''; } } },
+        y: { stacked: true, min: 0, max: 100,
+          ticks: { callback: v => v + '%' }, grid: { color: '#e5e7eb' } }
+      }
+    }
+  });
+}
+
+// ── Chart 5: HH Absolute line ─────────────────────────────────────────────────
+{
+  const datasets = HH_COMPONENTS.map(name => ({
+    label: name,
+    data: HH.series[name],
+    borderColor: HH_PALETTE[name].bg,
+    backgroundColor: 'transparent',
+    borderWidth: 1.8, pointRadius: 0, tension: 0, fill: false,
+  }));
+  new Chart(document.getElementById('chartHHAbs'), {
+    type: 'line',
+    data: { labels: HH.labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10, font: { size: 10 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toLocaleString('en-US', {maximumFractionDigits:0})} T` } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxRotation: 0,
+          callback(val, i) { return HH.labels[i].startsWith('Q1') ? `'${HH.labels[i].slice(3)}` : ''; } } },
+        y: { ticks: { callback: v => v.toLocaleString('en-US') }, grid: { color: '#e5e7eb' } }
+      }
+    }
+  });
+}
+
+// ── Chart 6: HH Share trends (unstacked) ─────────────────────────────────────
+{
+  const datasets = HH_COMPONENTS.map(name => ({
+    label: name,
+    data: HH.shares[name],
+    borderColor: HH_PALETTE[name].bg,
+    backgroundColor: 'transparent',
+    borderWidth: 2, pointRadius: 0, tension: 0, fill: false,
+  }));
+  new Chart(document.getElementById('chartHHTrends'), {
+    type: 'line',
+    data: { labels: HH.labels, datasets },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { position: 'bottom', labels: { boxWidth: 10, padding: 10, font: { size: 10 } } },
+        tooltip: { callbacks: { label: ctx => ` ${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%` } }
+      },
+      scales: {
+        x: { grid: { display: false }, ticks: { maxRotation: 0,
+          callback(val, i) { return HH.labels[i].startsWith('Q1') ? `'${HH.labels[i].slice(3)}` : ''; } } },
+        y: { ticks: { callback: v => v + '%' }, grid: { color: '#e5e7eb' } }
+      }
+    }
+  });
+}
+
 // ── Share & download helpers ──────────────────────────────────────────────────
 const PAGE_URL = 'https://anshory1972.github.io/nit-dashboard/output/dashboard_gva.html';
 const SHARE_TEXT = {
-  composition: 'GVA Composition — Component Share (%), Indonesia Total Economy 2016–2024 | NIT Dashboard',
-  absolute:    'GVA Components — Absolute Values, Indonesia Total Economy 2016–2024 | NIT Dashboard',
-  trends:      'GVA Component Share Trends, Indonesia Total Economy 2016–2024 | NIT Dashboard',
+  composition:    'GVA Composition — Component Share (%), Indonesia Total Economy 2016–2024 | NIT Dashboard',
+  absolute:       'GVA Components — Absolute Values, Indonesia Total Economy 2016–2024 | NIT Dashboard',
+  trends:         'GVA Component Share Trends, Indonesia Total Economy 2016–2024 | NIT Dashboard',
+  'hh-composition': 'Household Primary Income Composition, Indonesia 2016–2024 | NIT Dashboard',
+  'hh-absolute':    'Household Primary Income — Absolute Values, Indonesia 2016–2024 | NIT Dashboard',
+  'hh-trends':      'Household Primary Income Share Trends, Indonesia 2016–2024 | NIT Dashboard',
 };
 
 function shareChart(platform, section) {
