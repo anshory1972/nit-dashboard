@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 60" width="220" height="60">
+  <!-- Background (optional — remove if placing on existing dark surface) -->
+  <!-- T-account mark -->
+  <rect x="0" y="0" width="80" height="60" rx="5" fill="none" stroke="#C9A84C" stroke-width="2"/>
+  <rect x="7" y="7" width="30" height="46" rx="3" fill="#FFFFFF" opacity="0.08"/>
+  <rect x="43" y="7" width="30" height="46" rx="3" fill="#C9A84C"/>
+  <line x1="40" y1="0" x2="40" y2="60" stroke="#C9A84C" stroke-width="1.5"/>
+  <!-- Wordmark -->
+  <text x="96" y="36" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="26" fill="#FFFFFF">NIT</text>
+  <text x="96" y="52" font-family="Arial, Helvetica, sans-serif" font-weight="400" font-size="13" fill="#C9A84C">Dashboard</text>
+</svg>
