@@ -103,18 +103,18 @@
   }
   .share-bar span { font-size: 0.68rem; color: #9ca3af; margin-right: 2px; }
   .share-btn {
-    display: inline-flex; align-items: center; gap: 5px;
+    display: inline-flex; align-items: center; justify-content: center;
     font-size: 0.68rem; font-weight: 600;
-    padding: 4px 10px; border-radius: 4px; border: none;
+    width: 28px; height: 28px; border-radius: 4px; border: none;
     cursor: pointer; text-decoration: none;
-    transition: opacity 0.15s;
+    transition: opacity 0.15s; flex-shrink: 0;
   }
   .share-btn:hover { opacity: 0.82; }
   .share-btn.x        { background:#000;    color:#fff; }
   .share-btn.linkedin { background:#0a66c2; color:#fff; }
   .share-btn.whatsapp { background:#25d366; color:#fff; }
-  .share-btn.copy     { background:#f3f4f6; color:#374151; border: 1px solid #e5e7eb; }
-  .share-btn.download { background:#9a7a31; color:#fff; }
+  .share-btn.facebook { background:#1877f2; color:#fff; }
+  .share-btn.download { background:#9a7a31; color:#fff; font-size: 0.85rem; }
 
   /* Legend override */
   .legend-row {
@@ -173,11 +173,11 @@
     </div>
     <div class="share-bar">
       <span>Share:</span>
-      <a class="share-btn x"        href="#" onclick="shareChart('x','composition');return false;">&#10005; Post</a>
-      <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','composition');return false;">in LinkedIn</a>
-      <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','composition');return false;">&#128235; WhatsApp</a>
-      <button class="share-btn copy"     onclick="copyLink('composition')">&#128279; Copy link</button>
-      <button class="share-btn download" onclick="downloadChart('chartShare','GVA-Composition')">&#8595; Download PNG</button>
+      <a class="share-btn x"        href="#" onclick="shareChart('x','composition');return false;" title="Post on X">𝕏</a>
+      <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','composition');return false;" title="Share on LinkedIn">in</a>
+      <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','composition');return false;" title="Share on WhatsApp">&#128235;</a>
+      <a class="share-btn facebook" href="#" onclick="shareChart('facebook','composition');return false;" title="Share on Facebook">f</a>
+      <button class="share-btn download" onclick="downloadChart('chartShare','GVA-Composition')" title="Download PNG">&#8595;</button>
     </div>
     <div class="note" style="margin-top:12px">
       <strong>&#9432; Q1 2022 normalization:</strong>
@@ -203,11 +203,11 @@
       </div>
       <div class="share-bar">
         <span>Share:</span>
-        <a class="share-btn x"        href="#" onclick="shareChart('x','absolute');return false;">&#10005; Post</a>
-        <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','absolute');return false;">in LinkedIn</a>
-        <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','absolute');return false;">&#128235; WhatsApp</a>
-        <button class="share-btn copy"     onclick="copyLink('absolute')">&#128279; Copy link</button>
-        <button class="share-btn download" onclick="downloadChart('chartAbs','GVA-Absolute-Values')">&#8595; Download PNG</button>
+        <a class="share-btn x"        href="#" onclick="shareChart('x','absolute');return false;" title="Post on X">𝕏</a>
+        <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','absolute');return false;" title="Share on LinkedIn">in</a>
+        <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','absolute');return false;" title="Share on WhatsApp">&#128235;</a>
+        <a class="share-btn facebook" href="#" onclick="shareChart('facebook','absolute');return false;" title="Share on Facebook">f</a>
+        <button class="share-btn download" onclick="downloadChart('chartAbs','GVA-Absolute-Values')" title="Download PNG">&#8595;</button>
       </div>
     </div>
 
@@ -225,11 +225,11 @@
       </div>
       <div class="share-bar">
         <span>Share:</span>
-        <a class="share-btn x"        href="#" onclick="shareChart('x','trends');return false;">&#10005; Post</a>
-        <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','trends');return false;">in LinkedIn</a>
-        <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','trends');return false;">&#128235; WhatsApp</a>
-        <button class="share-btn copy"     onclick="copyLink('trends')">&#128279; Copy link</button>
-        <button class="share-btn download" onclick="downloadChart('chartB1g','GVA-Share-Trends')">&#8595; Download PNG</button>
+        <a class="share-btn x"        href="#" onclick="shareChart('x','trends');return false;" title="Post on X">𝕏</a>
+        <a class="share-btn linkedin" href="#" onclick="shareChart('linkedin','trends');return false;" title="Share on LinkedIn">in</a>
+        <a class="share-btn whatsapp" href="#" onclick="shareChart('whatsapp','trends');return false;" title="Share on WhatsApp">&#128235;</a>
+        <a class="share-btn facebook" href="#" onclick="shareChart('facebook','trends');return false;" title="Share on Facebook">f</a>
+        <button class="share-btn download" onclick="downloadChart('chartB1g','GVA-Share-Trends')" title="Download PNG">&#8595;</button>
       </div>
     </div>
   </div>
@@ -482,19 +482,11 @@ function shareChart(platform, section) {
     x:        `https://twitter.com/intent/tweet?text=${text}&url=${url}`,
     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
     whatsapp: `https://wa.me/?text=${text}%20${url}`,
+    facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
   };
   window.open(targets[platform], '_blank', 'width=600,height=480');
 }
 
-function copyLink(section) {
-  const url = `${PAGE_URL}#section-${section}`;
-  navigator.clipboard.writeText(url).then(() => {
-    const btn = event.target;
-    const orig = btn.textContent;
-    btn.textContent = '✓ Copied!';
-    setTimeout(() => btn.textContent = orig, 2000);
-  });
-}
 
 function downloadChart(canvasId, filename) {
   const chart = Chart.getChart(canvasId);
